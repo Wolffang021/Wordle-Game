@@ -1,3 +1,4 @@
+import java.util.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -10,6 +11,14 @@ class WordleGame extends JFrame {
     String targetWord;
     
     void PlayGame() {
+        Random random = new Random();
+        Words words = new Words();
+        int randomRow = random.nextInt(words.wordsList.length);
+        int randomColumn = random.nextInt(words.wordsList[randomRow].length);
+
+        targetWord = words.wordsList[randomRow][randomColumn];
+        System.out.print(targetWord);
+
         JPanel[][] wordBox = new JPanel[6][5];
         JLabel[][] boxText = new JLabel[6][5];
         
