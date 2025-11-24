@@ -4,7 +4,9 @@ import java.awt.event.*;
 
 class WordleGame extends JFrame {
     int curBoxIndex = 0;    // To navigate during typing
-    int wordBoxX = 10;
+    int curBoxRow = 0;    // To navigate during typing
+    int wordBoxX = 16;
+    int wordBoxY = 10;
 
     public WordleGame() {
         this.setTitle("Wordle Game");
@@ -14,35 +16,40 @@ class WordleGame extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(null);
 
-        JPanel[] wordBox = new JPanel[5];
-        JLabel[] boxText = new JLabel[5];
+        JPanel[][] wordBox = new JPanel[6][5];
+        JLabel[][] boxText = new JLabel[6][5];
 
-        for (int i = 0; i < 5; i++) {
-            wordBox[i] = new JPanel();
-            wordBox[i].setBackground(new Color(30, 30, 30));
-            wordBox[i].setBounds(wordBoxX += 55, 10, 50, 50);
-            this.add(wordBox[i]);
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 5; j++) {
+                wordBox[i][j] = new JPanel();
+                wordBox[i][j].setBackground(new Color(30, 30, 30));
+                wordBox[i][j].setBounds(wordBoxX += 52, wordBoxY, 50, 50);
+                this.add(wordBox[i][j]);
+    
+                boxText[i][j] = new JLabel();
+                Font tempFont = boxText[i][j].getFont();
+                Font boxTextFont = tempFont.deriveFont(32f);
+                boxText[i][j].setFont(boxTextFont);
+                boxText[i][j].setForeground(new Color(200, 200, 200));
+                boxText[i][j].setText("");
+                wordBox[i][j].add(boxText[i][j]);
+            }
 
-            boxText[i] = new JLabel();
-            Font tempFont = boxText[i].getFont();
-            Font boxTextFont = tempFont.deriveFont(32f);
-            boxText[i].setFont(boxTextFont);
-            boxText[i].setForeground(new Color(200, 200, 200));
-            boxText[i].setText("");
-            wordBox[i].add(boxText[i]);
+            wordBoxX = 16;
+            wordBoxY += 52;
         }
 
         this.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE && curBoxIndex > 0) {
-                    boxText[--curBoxIndex].setText("");
+                    boxText[curBoxRow][--curBoxIndex].setText("");
                 }
 
                 char tempChar = e.getKeyChar();
                 
                 if (curBoxIndex < 5 && Character.isAlphabetic(tempChar)) {
-                    boxText[curBoxIndex++].setText(Character.toUpperCase(tempChar) + "");
+                    boxText[curBoxRow][curBoxIndex++].setText(Character.toUpperCase(tempChar) + "");
                 }
             }
         });
