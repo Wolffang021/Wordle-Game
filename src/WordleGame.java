@@ -18,6 +18,7 @@ class WordleGame extends JFrame {
         int randomColumn = random.nextInt(words.wordsList[randomRow].length);
 
         targetWord = words.wordsList[randomRow][randomColumn];
+        System.out.println(targetWord);
         inputWord = "";
 
         JPanel[][] wordBox = new JPanel[6][5];
@@ -61,13 +62,36 @@ class WordleGame extends JFrame {
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE && curBoxIndex > 0) {
                     boxText[curBoxRow][--curBoxIndex].setText("");
+
+                    inputWord = inputWord.substring(0, inputWord.length() - 1);
                     return;
                 }
         
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    if (true) {
-                        //
+                if (e.getKeyCode() == KeyEvent.VK_ENTER && inputWord.length() == 5) {
+                    if (inputWord.equals(targetWord)) {
+                        messageText.setText("CORRECT!");
+                        
+                        KeyboardFocusManager.getCurrentKeyboardFocusManager().clearGlobalFocusOwner();
+                        return;
                     }
+                    else {
+                        for (int i = 0; i < words.wordsList.length; i++) {
+                            for (int j = 0; j < words.wordsList[i].length; j++) {
+                                if (inputWord.equals(words.wordsList[i][j])) {
+                                    messageText.setText("INCORRECT!");
+
+                                    curBoxIndex = 0;
+                                    curBoxRow++;
+                                    inputWord = "";
+
+                                    return;
+                                }
+                            }
+                        }
+
+                        messageText.setText("NO SUCH WORD!");
+                    }
+
                     return;
                 }
         
@@ -75,12 +99,15 @@ class WordleGame extends JFrame {
                 
                 if (curBoxIndex < 5 && Character.isAlphabetic(tempChar)) {
                     boxText[curBoxRow][curBoxIndex++].setText(Character.toUpperCase(tempChar) + "");
+
+                    inputWord += Character.toUpperCase(tempChar);
                 }
+                System.out.println(inputWord + " Size: " + inputWord.length());
             }
         });
         
         this.setFocusable(true);
-        this.requestFocus();
+        this.requestFocusInWindow();
         
         this.revalidate();;
         this.repaint();
