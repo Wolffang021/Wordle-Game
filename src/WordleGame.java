@@ -9,6 +9,7 @@ class WordleGame extends JFrame {
     int wordBoxX = 16;
     int wordBoxY = 10;
     String targetWord;
+    String inputWord;
     
     void PlayGame() {
         Random random = new Random();
@@ -17,7 +18,7 @@ class WordleGame extends JFrame {
         int randomColumn = random.nextInt(words.wordsList[randomRow].length);
 
         targetWord = words.wordsList[randomRow][randomColumn];
-        System.out.print(targetWord);
+        inputWord = "";
 
         JPanel[][] wordBox = new JPanel[6][5];
         JLabel[][] boxText = new JLabel[6][5];
@@ -41,6 +42,19 @@ class WordleGame extends JFrame {
             wordBoxX = 16;
             wordBoxY += 52;
         }
+
+        JPanel messageBox = new JPanel();
+        messageBox.setBackground(new Color(30, 30, 30));
+        messageBox.setBounds(90, 325, 215, 50);
+        this.add(messageBox);
+        
+        JLabel messageText = new JLabel();
+        Font tempFont = messageText.getFont();
+        Font messageTextFont = tempFont.deriveFont(24f);
+        messageText.setFont(messageTextFont);
+        messageText.setForeground(new Color(200, 200, 200));
+        messageText.setText("Hello, World!");
+        messageBox.add(messageText);
         
         this.addKeyListener(new KeyAdapter() {
             @Override
@@ -51,7 +65,7 @@ class WordleGame extends JFrame {
                 }
         
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    if (false) {
+                    if (true) {
                         //
                     }
                     return;
