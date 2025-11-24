@@ -1,8 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
-// import java.awt.event.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 
 class WordleGame extends JFrame {
     int curBoxIndex = 0;    // To navigate during typing
@@ -36,7 +34,11 @@ class WordleGame extends JFrame {
 
         this.addKeyListener(new KeyAdapter() {
             @Override
-            public void keyTyped(KeyEvent e) {
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE && curBoxIndex > 0) {
+                    boxText[--curBoxIndex].setText("");
+                }
+
                 char tempChar = e.getKeyChar();
                 
                 if (curBoxIndex < 5 && Character.isAlphabetic(tempChar)) {
