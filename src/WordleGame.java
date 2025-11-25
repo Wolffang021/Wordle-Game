@@ -51,8 +51,7 @@ class WordleGame extends JFrame {
         this.add(messageBox);
         
         JLabel messageText = new JLabel();
-        Font messageTextFont = new Font("dialog", Font.BOLD, 24);
-        messageText.setFont(messageTextFont);
+        messageText.setFont(new Font("dialog", Font.BOLD, 24));
         messageText.setForeground(new Color(200, 200, 200));
         messageText.setText("");
         messageBox.add(messageText);
@@ -61,8 +60,7 @@ class WordleGame extends JFrame {
         playAgaiButton.setBounds(90, 380, 215, 50);
         playAgaiButton.setBackground(new Color(30, 30, 30));
         playAgaiButton.setForeground(new Color(200, 200, 200));
-        Font playAgainButtonFont = new Font("dialog", Font.BOLD, 24);
-        playAgaiButton.setFont(playAgainButtonFont);
+        playAgaiButton.setFont(new Font("dialog", Font.BOLD, 24));
         playAgaiButton.setEnabled(false);
         this.add(playAgaiButton);
         
@@ -70,8 +68,7 @@ class WordleGame extends JFrame {
         menuButton.setBounds(90, 435, 215, 50);
         menuButton.setBackground(new Color(30, 30, 30));
         menuButton.setForeground(new Color(200, 200, 200));
-        Font menuButtonFont = new Font("dialog", Font.BOLD, 24);
-        menuButton.setFont(menuButtonFont);
+        menuButton.setFont(new Font("dialog", Font.BOLD, 24));
         menuButton.setEnabled(false);
         this.add(menuButton);
         
@@ -100,8 +97,7 @@ class WordleGame extends JFrame {
                         // }
 
                         if (inputWord.equals(targetWord)) {
-                            Font messageTextFont = new Font("dialog", Font.BOLD, 24);
-                            messageText.setFont(messageTextFont);
+                            messageText.setFont(new Font("dialog", Font.BOLD, 24));
                             messageText.setText("CORRECT!");
                             
                             KeyboardFocusManager.getCurrentKeyboardFocusManager().clearGlobalFocusOwner();
@@ -114,8 +110,7 @@ class WordleGame extends JFrame {
                             for (int i = 0; i < words.wordsList.length; i++) {
                                 for (int j = 0; j < words.wordsList[i].length; j++) {
                                     if (inputWord.equals(words.wordsList[i][j])) {
-                                        Font messageTextFont = new Font("dialog", Font.BOLD, 24);
-                                        messageText.setFont(messageTextFont);
+                                        messageText.setFont(new Font("dialog", Font.BOLD, 24));
                                         messageText.setText("INCORRECT!");
                                         
                                         for (int k = 0; k < wordBox[curBoxRow].length; k++) {
@@ -136,8 +131,7 @@ class WordleGame extends JFrame {
                                         inputWord = "";
                                         
                                         if (curBoxRow > 5) {
-                                            messageTextFont = new Font("dialog", Font.BOLD, 16);
-                                            messageText.setFont(messageTextFont);
+                                            messageText.setFont(new Font("dialog", Font.BOLD, 16));
                                             messageText.setText("THE WORD WAS " + targetWord);
                                             
                                             KeyboardFocusManager.getCurrentKeyboardFocusManager().clearGlobalFocusOwner();
@@ -148,14 +142,12 @@ class WordleGame extends JFrame {
                                 }    
                             }    
                             
-                            Font messageTextFont = new Font("dialog", Font.BOLD, 20);
-                            messageText.setFont(messageTextFont);
+                            messageText.setFont(new Font("dialog", Font.BOLD, 20));
                             messageText.setText("NO SUCH WORD!");
                         }    
                     }    
                     else {
-                        Font messageTextFont = new Font("dialog", Font.BOLD, 18);
-                        messageText.setFont(messageTextFont);
+                        messageText.setFont(new Font("dialog", Font.BOLD, 18));
                         messageText.setText("INCOMPLETE WORD!");
                     }    
                     
