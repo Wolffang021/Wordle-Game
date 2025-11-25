@@ -8,6 +8,7 @@ class WordleGame extends JFrame {
     int curBoxRow = 0;      // To navigate during typing
     int wordBoxX = 16;
     int wordBoxY = 10;
+    int[] wordCount = {0, 0, 0, 0, 0};
     String targetWord;
     String inputWord;
     
@@ -38,11 +39,11 @@ class WordleGame extends JFrame {
                 boxText[i][j].setText("");
                 wordBox[i][j].add(boxText[i][j]);
             }
-        
+            
             wordBoxX = 16;
             wordBoxY += 52;
         }
-
+        
         JPanel messageBox = new JPanel();
         messageBox.setBackground(new Color(30, 30, 30));
         messageBox.setBounds(90, 325, 215, 50);
@@ -59,15 +60,27 @@ class WordleGame extends JFrame {
         this.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
-                    if (curBoxIndex > 0) {
-                        boxText[curBoxRow][--curBoxIndex].setText("");
-                        
-                        inputWord = inputWord.substring(0, inputWord.length() - 1);
+            if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+                if (curBoxIndex > 0) {
+                    boxText[curBoxRow][--curBoxIndex].setText("");
+                    
+                    inputWord = inputWord.substring(0, inputWord.length() - 1);
                     }
                 }
                 else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     if (inputWord.length() == 5) {
+                        for (int i = 0; i < wordCount.length; i++) {
+                            wordCount[i] = 0;
+                        }
+
+                        for (int i = 0; i < targetWord.length(); i++) {
+                            wordCount[targetWord.indexOf(targetWord.charAt(i))]++;
+                        }
+                
+                        // for (int i : wordCount) {
+                        //     System.out.print(i + " ");
+                        // }
+
                         if (inputWord.equals(targetWord)) {
                             Font messageTextFont = new Font("dialog", Font.BOLD, 24);
                             messageText.setFont(messageTextFont);
@@ -91,8 +104,10 @@ class WordleGame extends JFrame {
                                             if (targetWord.contains(boxText[curBoxRow][k].getText())) {
                                                 if (boxText[curBoxRow][k].getText().charAt(0) == targetWord.charAt(k)) {
                                                     wordBox[curBoxRow][k].setBackground(new Color(50, 150, 50));
+
+                                                    wordCount[targetWord.indexOf(boxText[curBoxRow][k].getText().charAt(0))]--;
                                                 }
-                                                else {
+                                                else if (wordCount[targetWord.indexOf(boxText[curBoxRow][k].getText().charAt(0))]-- > 0) {
                                                     wordBox[curBoxRow][k].setBackground(new Color(160, 150, 40));
                                                 }
                                             }
