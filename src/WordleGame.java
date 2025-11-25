@@ -4,23 +4,34 @@ import java.awt.*;
 import java.awt.event.*;
 
 class WordleGame extends JFrame {
-    int curBoxIndex = 0;    // To navigate during typing
-    int curBoxRow = 0;      // To navigate during typing
-    int wordBoxX = 16;
-    int wordBoxY = 10;
-    int[] wordCount = {0, 0, 0, 0, 0};
+    int curBoxIndex;    // To navigate during typing
+    int curBoxRow;      // To navigate during typing
+    int wordBoxX;
+    int wordBoxY;
     String targetWord;
     String inputWord;
     
     void PlayGame() {
+        this.getContentPane().removeAll();
+        this.getContentPane().revalidate();
+        this.getContentPane().repaint();
+
+        
+
         Random random = new Random();
         Words words = new Words();
         int randomRow = random.nextInt(words.wordsList.length);
         int randomColumn = random.nextInt(words.wordsList[randomRow].length);
-
+        
         targetWord = words.wordsList[randomRow][randomColumn];
         // System.out.println(targetWord);
         inputWord = "";
+        
+        curBoxIndex = 0;
+        curBoxRow = 0;
+        wordBoxX = 16;
+        wordBoxY = 10;
+        int[] wordCount = {0, 0, 0, 0, 0};
 
         JPanel[][] wordBox = new JPanel[6][5];
         JLabel[][] boxText = new JLabel[6][5];
@@ -56,14 +67,14 @@ class WordleGame extends JFrame {
         messageText.setText("");
         messageBox.add(messageText);
         
-        JButton playAgaiButton = new JButton("PLAY AGAIN");
-        playAgaiButton.setBounds(90, 380, 215, 50);
-        playAgaiButton.setBackground(new Color(30, 30, 30));
-        playAgaiButton.setForeground(new Color(200, 200, 200));
-        playAgaiButton.setFont(new Font("dialog", Font.BOLD, 24));
-        playAgaiButton.setEnabled(false);
-        this.add(playAgaiButton);
-        
+        JButton playAgainButton = new JButton("PLAY AGAIN");
+        playAgainButton.setBounds(90, 380, 215, 50);
+        playAgainButton.setBackground(new Color(30, 30, 30));
+        playAgainButton.setForeground(new Color(200, 200, 200));
+        playAgainButton.setFont(new Font("dialog", Font.BOLD, 24));
+        playAgainButton.setEnabled(false);
+        this.add(playAgainButton);
+
         JButton menuButton = new JButton("MAIN MENU");
         menuButton.setBounds(90, 435, 215, 50);
         menuButton.setBackground(new Color(30, 30, 30));
@@ -71,15 +82,15 @@ class WordleGame extends JFrame {
         menuButton.setFont(new Font("dialog", Font.BOLD, 24));
         menuButton.setEnabled(false);
         this.add(menuButton);
-        
-        this.addKeyListener(new KeyAdapter() {
+
+        KeyAdapter keyListener = new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-            if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
-                if (curBoxIndex > 0) {
-                    boxText[curBoxRow][--curBoxIndex].setText("");
+                if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+                    if (curBoxIndex > 0) {
+                        boxText[curBoxRow][--curBoxIndex].setText("");
                     
-                    inputWord = inputWord.substring(0, inputWord.length() - 1);
+                        inputWord = inputWord.substring(0, inputWord.length() - 1);
                     }
                 }
                 else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -87,27 +98,28 @@ class WordleGame extends JFrame {
                         for (int i = 0; i < wordCount.length; i++) {
                             wordCount[i] = 0;
                         }
-
+                        
                         for (int i = 0; i < targetWord.length(); i++) {
                             wordCount[targetWord.indexOf(targetWord.charAt(i))]++;
                         }
-                
+                        
                         // for (int i : wordCount) {
-                        //     System.out.print(i + " ");
-                        // }
-
-                        if (inputWord.equals(targetWord)) {
-                            messageText.setFont(new Font("dialog", Font.BOLD, 24));
-                            messageText.setText("CORRECT!");
+                            //     System.out.print(i + " ");
+                            // }
                             
-                            KeyboardFocusManager.getCurrentKeyboardFocusManager().clearGlobalFocusOwner();
+                            if (inputWord.equals(targetWord)) {
+                                messageText.setFont(new Font("dialog", Font.BOLD, 24));
+                                messageText.setText("CORRECT!");
+                                
+                                for (JPanel box : wordBox[curBoxRow]) {
+                                    box.setBackground(new Color(50, 150, 50));
+                                }
 
-                            for (JPanel box : wordBox[curBoxRow]) {
-                                box.setBackground(new Color(50, 150, 50));
+                                playAgainButton.setEnabled(true);
+                                KeyboardFocusManager.getCurrentKeyboardFocusManager().clearGlobalFocusOwner();
                             }
-                        }
-                        else {
-                            for (int i = 0; i < words.wordsList.length; i++) {
+                            else {
+                                for (int i = 0; i < words.wordsList.length; i++) {
                                 for (int j = 0; j < words.wordsList[i].length; j++) {
                                     if (inputWord.equals(words.wordsList[i][j])) {
                                         messageText.setFont(new Font("dialog", Font.BOLD, 24));
@@ -117,7 +129,7 @@ class WordleGame extends JFrame {
                                             if (targetWord.contains(boxText[curBoxRow][k].getText())) {
                                                 if (boxText[curBoxRow][k].getText().charAt(0) == targetWord.charAt(k)) {
                                                     wordBox[curBoxRow][k].setBackground(new Color(50, 150, 50));
-
+                                                    
                                                     wordCount[targetWord.indexOf(boxText[curBoxRow][k].getText().charAt(0))]--;
                                                 }
                                                 else if (wordCount[targetWord.indexOf(boxText[curBoxRow][k].getText().charAt(0))]-- > 0) {
@@ -125,7 +137,7 @@ class WordleGame extends JFrame {
                                                 }
                                             }
                                         }
-
+                                        
                                         curBoxIndex = 0;
                                         curBoxRow++;
                                         inputWord = "";
@@ -134,9 +146,10 @@ class WordleGame extends JFrame {
                                             messageText.setFont(new Font("dialog", Font.BOLD, 16));
                                             messageText.setText("THE WORD WAS " + targetWord);
                                             
+                                            playAgainButton.setEnabled(true);
                                             KeyboardFocusManager.getCurrentKeyboardFocusManager().clearGlobalFocusOwner();
                                         }
-
+                                        
                                         return;
                                     }    
                                 }    
@@ -163,12 +176,24 @@ class WordleGame extends JFrame {
                 }
                 // System.out.println(inputWord + " Size: " + inputWord.length());
             }
-        });
+        };
         
+        this.addKeyListener(keyListener);
         this.setFocusable(true);
         this.requestFocusInWindow();
+
+        ActionListener playAgainActionListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                WordleGame.this.removeKeyListener(keyListener);
+                playAgainButton.removeActionListener(this);
+                PlayGame();
+            }
+        };
+
+        playAgainButton.addActionListener(playAgainActionListener);
         
-        this.revalidate();;
+        this.revalidate();
         this.repaint();
         this.setVisible(true);
     }
