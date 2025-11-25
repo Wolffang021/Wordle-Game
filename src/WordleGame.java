@@ -57,6 +57,24 @@ class WordleGame extends JFrame {
         messageText.setText("");
         messageBox.add(messageText);
         
+        JButton playAgaiButton = new JButton("PLAY AGAIN");
+        playAgaiButton.setBounds(90, 380, 215, 50);
+        playAgaiButton.setBackground(new Color(30, 30, 30));
+        playAgaiButton.setForeground(new Color(200, 200, 200));
+        Font playAgainButtonFont = new Font("dialog", Font.BOLD, 24);
+        playAgaiButton.setFont(playAgainButtonFont);
+        playAgaiButton.setEnabled(false);
+        this.add(playAgaiButton);
+        
+        JButton menuButton = new JButton("MAIN MENU");
+        menuButton.setBounds(90, 435, 215, 50);
+        menuButton.setBackground(new Color(30, 30, 30));
+        menuButton.setForeground(new Color(200, 200, 200));
+        Font menuButtonFont = new Font("dialog", Font.BOLD, 24);
+        menuButton.setFont(menuButtonFont);
+        menuButton.setEnabled(false);
+        this.add(menuButton);
+        
         this.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -113,6 +131,10 @@ class WordleGame extends JFrame {
                                             }
                                         }
 
+                                        curBoxIndex = 0;
+                                        curBoxRow++;
+                                        inputWord = "";
+                                        
                                         if (curBoxRow > 5) {
                                             messageTextFont = new Font("dialog", Font.BOLD, 16);
                                             messageText.setFont(messageTextFont);
@@ -120,10 +142,6 @@ class WordleGame extends JFrame {
                                             
                                             KeyboardFocusManager.getCurrentKeyboardFocusManager().clearGlobalFocusOwner();
                                         }
-
-                                        curBoxIndex = 0;
-                                        curBoxRow++;
-                                        inputWord = "";
 
                                         return;
                                     }    
@@ -165,7 +183,7 @@ class WordleGame extends JFrame {
     
     public WordleGame() {
         this.setTitle("Wordle Game");
-        this.setSize(400, 600);
+        this.setSize(400, 525);
         this.getContentPane().setBackground(new Color(55, 50, 50));
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
