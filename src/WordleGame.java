@@ -18,7 +18,7 @@ class WordleGame extends JFrame {
         int randomColumn = random.nextInt(words.wordsList[randomRow].length);
 
         targetWord = words.wordsList[randomRow][randomColumn];
-        System.out.println(targetWord);
+        // System.out.println(targetWord);
         inputWord = "";
 
         JPanel[][] wordBox = new JPanel[6][5];
@@ -32,7 +32,6 @@ class WordleGame extends JFrame {
                 this.add(wordBox[i][j]);
         
                 boxText[i][j] = new JLabel();
-                // System.out.print(boxText[i][j].getFont());
                 Font boxTextFont = new Font("dialog", Font.BOLD, 32);
                 boxText[i][j].setFont(boxTextFont);
                 boxText[i][j].setForeground(new Color(200, 200, 200));
@@ -75,7 +74,10 @@ class WordleGame extends JFrame {
                             messageText.setText("CORRECT!");
                             
                             KeyboardFocusManager.getCurrentKeyboardFocusManager().clearGlobalFocusOwner();
-                            return;
+
+                            for (JPanel box : wordBox[curBoxRow]) {
+                                box.setBackground(new Color(50, 150, 50));
+                            }
                         }
                         else {
                             for (int i = 0; i < words.wordsList.length; i++) {
@@ -85,10 +87,17 @@ class WordleGame extends JFrame {
                                         messageText.setFont(messageTextFont);
                                         messageText.setText("INCORRECT!");
                                         
-                                        curBoxIndex = 0;
-                                        curBoxRow++;
-                                        inputWord = "";
-                                        
+                                        for (int k = 0; k < wordBox[curBoxRow].length; k++) {
+                                            if (targetWord.contains(boxText[curBoxRow][k].getText())) {
+                                                if (boxText[curBoxRow][k].getText().charAt(0) == targetWord.charAt(k)) {
+                                                    wordBox[curBoxRow][k].setBackground(new Color(50, 150, 50));
+                                                }
+                                                else {
+                                                    wordBox[curBoxRow][k].setBackground(new Color(160, 150, 40));
+                                                }
+                                            }
+                                        }
+
                                         if (curBoxRow > 5) {
                                             messageTextFont = new Font("dialog", Font.BOLD, 16);
                                             messageText.setFont(messageTextFont);
@@ -96,7 +105,11 @@ class WordleGame extends JFrame {
                                             
                                             KeyboardFocusManager.getCurrentKeyboardFocusManager().clearGlobalFocusOwner();
                                         }
-                                        
+
+                                        curBoxIndex = 0;
+                                        curBoxRow++;
+                                        inputWord = "";
+
                                         return;
                                     }    
                                 }    
