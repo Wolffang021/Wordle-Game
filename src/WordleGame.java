@@ -5,7 +5,7 @@ import java.awt.event.*;
 
 class WordleGame extends JFrame {
     int curBoxIndex = 0;    // To navigate during typing
-    int curBoxRow = 0;    // To navigate during typing
+    int curBoxRow = 0;      // To navigate during typing
     int wordBoxX = 16;
     int wordBoxY = 10;
     String targetWord;
@@ -32,8 +32,8 @@ class WordleGame extends JFrame {
                 this.add(wordBox[i][j]);
         
                 boxText[i][j] = new JLabel();
-                Font tempFont = boxText[i][j].getFont();
-                Font boxTextFont = tempFont.deriveFont(32f);
+                // System.out.print(boxText[i][j].getFont());
+                Font boxTextFont = new Font("dialog", Font.BOLD, 32);
                 boxText[i][j].setFont(boxTextFont);
                 boxText[i][j].setForeground(new Color(200, 200, 200));
                 boxText[i][j].setText("");
@@ -47,51 +47,72 @@ class WordleGame extends JFrame {
         JPanel messageBox = new JPanel();
         messageBox.setBackground(new Color(30, 30, 30));
         messageBox.setBounds(90, 325, 215, 50);
+        messageBox.setLayout(new GridBagLayout());
         this.add(messageBox);
         
         JLabel messageText = new JLabel();
-        Font tempFont = messageText.getFont();
-        Font messageTextFont = tempFont.deriveFont(24f);
+        Font messageTextFont = new Font("dialog", Font.BOLD, 24);
         messageText.setFont(messageTextFont);
         messageText.setForeground(new Color(200, 200, 200));
-        messageText.setText("Hello, World!");
+        messageText.setText("");
         messageBox.add(messageText);
         
         this.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE && curBoxIndex > 0) {
-                    boxText[curBoxRow][--curBoxIndex].setText("");
-
-                    inputWord = inputWord.substring(0, inputWord.length() - 1);
-                    return;
-                }
-        
-                if (e.getKeyCode() == KeyEvent.VK_ENTER && inputWord.length() == 5) {
-                    if (inputWord.equals(targetWord)) {
-                        messageText.setText("CORRECT!");
+                if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+                    if (curBoxIndex > 0) {
+                        boxText[curBoxRow][--curBoxIndex].setText("");
                         
-                        KeyboardFocusManager.getCurrentKeyboardFocusManager().clearGlobalFocusOwner();
-                        return;
+                        inputWord = inputWord.substring(0, inputWord.length() - 1);
                     }
-                    else {
-                        for (int i = 0; i < words.wordsList.length; i++) {
-                            for (int j = 0; j < words.wordsList[i].length; j++) {
-                                if (inputWord.equals(words.wordsList[i][j])) {
-                                    messageText.setText("INCORRECT!");
-
-                                    curBoxIndex = 0;
-                                    curBoxRow++;
-                                    inputWord = "";
-
-                                    return;
-                                }
-                            }
+                }
+                else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    if (inputWord.length() == 5) {
+                        if (inputWord.equals(targetWord)) {
+                            Font messageTextFont = new Font("dialog", Font.BOLD, 24);
+                            messageText.setFont(messageTextFont);
+                            messageText.setText("CORRECT!");
+                            
+                            KeyboardFocusManager.getCurrentKeyboardFocusManager().clearGlobalFocusOwner();
+                            return;
                         }
-
-                        messageText.setText("NO SUCH WORD!");
-                    }
-
+                        else {
+                            for (int i = 0; i < words.wordsList.length; i++) {
+                                for (int j = 0; j < words.wordsList[i].length; j++) {
+                                    if (inputWord.equals(words.wordsList[i][j])) {
+                                        Font messageTextFont = new Font("dialog", Font.BOLD, 24);
+                                        messageText.setFont(messageTextFont);
+                                        messageText.setText("INCORRECT!");
+                                        
+                                        curBoxIndex = 0;
+                                        curBoxRow++;
+                                        inputWord = "";
+                                        
+                                        if (curBoxRow > 5) {
+                                            messageTextFont = new Font("dialog", Font.BOLD, 16);
+                                            messageText.setFont(messageTextFont);
+                                            messageText.setText("THE WORD WAS " + targetWord);
+                                            
+                                            KeyboardFocusManager.getCurrentKeyboardFocusManager().clearGlobalFocusOwner();
+                                        }
+                                        
+                                        return;
+                                    }    
+                                }    
+                            }    
+                            
+                            Font messageTextFont = new Font("dialog", Font.BOLD, 20);
+                            messageText.setFont(messageTextFont);
+                            messageText.setText("NO SUCH WORD!");
+                        }    
+                    }    
+                    else {
+                        Font messageTextFont = new Font("dialog", Font.BOLD, 18);
+                        messageText.setFont(messageTextFont);
+                        messageText.setText("INCOMPLETE WORD!");
+                    }    
+                    
                     return;
                 }
         
@@ -102,7 +123,7 @@ class WordleGame extends JFrame {
 
                     inputWord += Character.toUpperCase(tempChar);
                 }
-                System.out.println(inputWord + " Size: " + inputWord.length());
+                // System.out.println(inputWord + " Size: " + inputWord.length());
             }
         });
         
