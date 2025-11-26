@@ -23,7 +23,7 @@ class WordleGame extends JFrame {
         playButton.setFont(new Font("dialog", Font.BOLD, 24));
         playButton.setEnabled(true);
         this.add(playButton);
-        
+
         JButton exitButton = new JButton("EXIT");
         exitButton.setBounds(90, 235, 215, 50);
         exitButton.setBackground(new Color(30, 30, 30));
@@ -31,6 +31,26 @@ class WordleGame extends JFrame {
         exitButton.setFont(new Font("dialog", Font.BOLD, 24));
         exitButton.setEnabled(true);
         this.add(exitButton);
+        
+        ActionListener exitActionListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        };
+        
+        exitButton.addActionListener(exitActionListener);
+        
+        ActionListener playActionListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                playButton.removeActionListener(this);
+                exitButton.removeActionListener(exitActionListener);
+                PlayGame();
+            }
+        };
+        
+        playButton.addActionListener(playActionListener);
         
         this.setFocusable(true);
         this.requestFocusInWindow();
@@ -219,6 +239,18 @@ class WordleGame extends JFrame {
         };
 
         playAgainButton.addActionListener(playAgainActionListener);
+
+        ActionListener menuActionListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                WordleGame.this.removeKeyListener(keyListener);
+                playAgainButton.removeActionListener(playAgainActionListener);
+                menuButton.removeActionListener(this);
+                MainMenu();
+            }
+        };
+
+        menuButton.addActionListener(menuActionListener);
         
         this.revalidate();
         this.repaint();
@@ -234,7 +266,6 @@ class WordleGame extends JFrame {
         this.setLayout(null);
 
         MainMenu();
-        // PlayGame();
     }
 
     public static void main(String args[]) {
