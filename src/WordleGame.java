@@ -10,13 +10,40 @@ class WordleGame extends JFrame {
     int wordBoxY;
     String targetWord;
     String inputWord;
+
+    void MainMenu() {
+        this.getContentPane().removeAll();
+        this.getContentPane().revalidate();
+        this.getContentPane().repaint();
+        
+        JButton playButton = new JButton("PLAY");
+        playButton.setBounds(90, 180, 215, 50);
+        playButton.setBackground(new Color(30, 30, 30));
+        playButton.setForeground(new Color(200, 200, 200));
+        playButton.setFont(new Font("dialog", Font.BOLD, 24));
+        playButton.setEnabled(true);
+        this.add(playButton);
+        
+        JButton exitButton = new JButton("EXIT");
+        exitButton.setBounds(90, 235, 215, 50);
+        exitButton.setBackground(new Color(30, 30, 30));
+        exitButton.setForeground(new Color(200, 200, 200));
+        exitButton.setFont(new Font("dialog", Font.BOLD, 24));
+        exitButton.setEnabled(true);
+        this.add(exitButton);
+        
+        this.setFocusable(true);
+        this.requestFocusInWindow();
+
+        this.revalidate();
+        this.repaint();
+        this.setVisible(true);
+    }
     
     void PlayGame() {
         this.getContentPane().removeAll();
         this.getContentPane().revalidate();
         this.getContentPane().repaint();
-
-        
 
         Random random = new Random();
         Words words = new Words();
@@ -80,7 +107,7 @@ class WordleGame extends JFrame {
         menuButton.setBackground(new Color(30, 30, 30));
         menuButton.setForeground(new Color(200, 200, 200));
         menuButton.setFont(new Font("dialog", Font.BOLD, 24));
-        menuButton.setEnabled(false);
+        menuButton.setEnabled(true);
         this.add(menuButton);
 
         KeyAdapter keyListener = new KeyAdapter() {
@@ -104,10 +131,10 @@ class WordleGame extends JFrame {
                         }
                         
                         // for (int i : wordCount) {
-                            //     System.out.print(i + " ");
-                            // }
+                        //     System.out.print(i + " ");
+                        // }
                             
-                            if (inputWord.equals(targetWord)) {
+                        if (inputWord.equals(targetWord)) {
                                 messageText.setFont(new Font("dialog", Font.BOLD, 24));
                                 messageText.setText("CORRECT!");
                                 
@@ -120,10 +147,10 @@ class WordleGame extends JFrame {
                             }
                             else {
                                 for (int i = 0; i < words.wordsList.length; i++) {
-                                for (int j = 0; j < words.wordsList[i].length; j++) {
-                                    if (inputWord.equals(words.wordsList[i][j])) {
-                                        messageText.setFont(new Font("dialog", Font.BOLD, 24));
-                                        messageText.setText("INCORRECT!");
+                                    for (int j = 0; j < words.wordsList[i].length; j++) {
+                                        if (inputWord.equals(words.wordsList[i][j])) {
+                                            messageText.setFont(new Font("dialog", Font.BOLD, 24));
+                                            messageText.setText("INCORRECT!");
                                         
                                         for (int k = 0; k < wordBox[curBoxRow].length; k++) {
                                             if (targetWord.contains(boxText[curBoxRow][k].getText())) {
@@ -206,7 +233,8 @@ class WordleGame extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(null);
 
-        PlayGame();
+        MainMenu();
+        // PlayGame();
     }
 
     public static void main(String args[]) {
