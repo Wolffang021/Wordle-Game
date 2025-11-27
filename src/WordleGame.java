@@ -15,9 +15,29 @@ class WordleGame extends JFrame {
         this.getContentPane().removeAll();
         this.getContentPane().revalidate();
         this.getContentPane().repaint();
+
+        JPanel titleBox = new JPanel();
+        titleBox.setBackground(new Color(55, 50, 50));
+        titleBox.setBounds(20, 95, 345, 140);
+        titleBox.setLayout(new BoxLayout(titleBox, BoxLayout.Y_AXIS));
+        this.add(titleBox);
+        
+        JLabel titleText = new JLabel();
+        titleText.setFont(new Font("ariel black", Font.BOLD, 36));
+        titleText.setForeground(new Color(200, 200, 200));
+        titleText.setAlignmentX(CENTER_ALIGNMENT);
+        titleText.setText("WORDLE GAME");
+        titleBox.add(titleText);
+        
+        JLabel devCreditText = new JLabel();
+        devCreditText.setFont(new Font("ariel black", Font.BOLD, 8));
+        devCreditText.setForeground(new Color(200, 200, 200));
+        devCreditText.setAlignmentX(CENTER_ALIGNMENT);
+        devCreditText.setText("BY SHOURJO MAITRA");
+        titleBox.add(devCreditText);
         
         JButton playButton = new JButton("PLAY");
-        playButton.setBounds(90, 180, 215, 50);
+        playButton.setBounds(90, 240, 215, 50);
         playButton.setBackground(new Color(30, 30, 30));
         playButton.setForeground(new Color(200, 200, 200));
         playButton.setFont(new Font("dialog", Font.BOLD, 24));
@@ -25,7 +45,7 @@ class WordleGame extends JFrame {
         this.add(playButton);
 
         JButton exitButton = new JButton("EXIT");
-        exitButton.setBounds(90, 235, 215, 50);
+        exitButton.setBounds(90, 295, 215, 50);
         exitButton.setBackground(new Color(30, 30, 30));
         exitButton.setForeground(new Color(200, 200, 200));
         exitButton.setFont(new Font("dialog", Font.BOLD, 24));
