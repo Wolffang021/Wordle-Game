@@ -67,7 +67,7 @@ class WordleGame extends JFrame {
 
         Random random = new Random();
         Words words = new Words();
-        int randomRow = random.nextInt(words.wordsList.length);
+        int randomRow = 0;
         int randomColumn = random.nextInt(words.wordsList[randomRow].length);
         
         targetWord = words.wordsList[randomRow][randomColumn];
