@@ -1,7 +1,7 @@
 laCode = []
 taCode = []
 
-with open("C:/Users/Shourjo/Downloads/Wordle_Word_Dictionary/wordle-La.txt", "r") as laFile:
+with open("Wordle_Word_Dictionary/wordle-La.txt", "r") as laFile:
     c = 'a'
     laCode.append("\n\t\t{")
     for line in laFile:
@@ -11,7 +11,7 @@ with open("C:/Users/Shourjo/Downloads/Wordle_Word_Dictionary/wordle-La.txt", "r"
     laCode.append("}")
     laCode.append(", ")
 
-with open("C:/Users/Shourjo/Downloads/Wordle_Word_Dictionary/wordle-Ta.txt", "r") as laFile:
+with open("Wordle_Word_Dictionary/wordle-Ta.txt", "r") as laFile:
     c = 'a'
     taCode.append("\n\t\t{")
     for line in laFile:
