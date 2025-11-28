@@ -104,7 +104,7 @@ class WordleGame extends JFrame {
         
         targetWord = words.wordsList[randomRow][randomColumn];
         // targetWord = "CLERK";
-        System.out.println(targetWord);
+        // System.out.println(targetWord);
         inputWord = "";
         
         curBoxIndex = 0;
@@ -183,9 +183,9 @@ class WordleGame extends JFrame {
                             wordCount[targetWord.indexOf(targetWord.charAt(i))]++;
                         }
                         
-                        for (int i : wordCount) {
-                            System.out.print(i + " ");
-                        }
+                        // for (int i : wordCount) {
+                        //     System.out.print(i + " ");
+                        // }
                             
                         if (inputWord.equals(targetWord)) {
                                 messageText.setFont(new Font("dialog", Font.BOLD, 24));
@@ -262,7 +262,7 @@ class WordleGame extends JFrame {
 
                     inputWord += Character.toUpperCase(tempChar);
                 }
-                System.out.println(inputWord + " Size: " + inputWord.length());
+                // System.out.println(inputWord + " Size: " + inputWord.length());
             }
         };
         
