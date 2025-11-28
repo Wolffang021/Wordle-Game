@@ -43,7 +43,7 @@ class WordleGame extends JFrame {
         playButton.setFont(new Font("dialog", Font.BOLD, 24));
         playButton.setEnabled(true);
         this.add(playButton);
-
+        
         JButton exitButton = new JButton("EXIT");
         exitButton.setBounds(90, 295, 215, 50);
         exitButton.setBackground(new Color(30, 30, 30));
@@ -51,6 +51,18 @@ class WordleGame extends JFrame {
         exitButton.setFont(new Font("dialog", Font.BOLD, 24));
         exitButton.setEnabled(true);
         this.add(exitButton);
+        
+        JPanel versionBox = new JPanel();
+        versionBox.setBackground(new Color(55, 50, 50));
+        versionBox.setBounds(350, 475, 40, 20);
+        this.add(versionBox);
+
+        JLabel versionText = new JLabel();
+        versionText.setFont(new Font("ariel black", Font.BOLD, 8));
+        versionText.setForeground(new Color(75, 70, 70));
+        versionText.setAlignmentX(RIGHT_ALIGNMENT);
+        versionText.setText("v1.0.1");
+        versionBox.add(versionText);
         
         ActionListener exitActionListener = new ActionListener() {
             @Override
@@ -91,7 +103,8 @@ class WordleGame extends JFrame {
         int randomColumn = random.nextInt(words.wordsList[randomRow].length);
         
         targetWord = words.wordsList[randomRow][randomColumn];
-        // System.out.println(targetWord);
+        // targetWord = "CLERK";
+        System.out.println(targetWord);
         inputWord = "";
         
         curBoxIndex = 0;
@@ -170,9 +183,9 @@ class WordleGame extends JFrame {
                             wordCount[targetWord.indexOf(targetWord.charAt(i))]++;
                         }
                         
-                        // for (int i : wordCount) {
-                        //     System.out.print(i + " ");
-                        // }
+                        for (int i : wordCount) {
+                            System.out.print(i + " ");
+                        }
                             
                         if (inputWord.equals(targetWord)) {
                                 messageText.setFont(new Font("dialog", Font.BOLD, 24));
@@ -199,11 +212,19 @@ class WordleGame extends JFrame {
                                                     
                                                     wordCount[targetWord.indexOf(boxText[curBoxRow][k].getText().charAt(0))]--;
                                                 }
-                                                else if (wordCount[targetWord.indexOf(boxText[curBoxRow][k].getText().charAt(0))]-- > 0) {
+                                            }
+                                        }
+                                        
+                                        for (int k = 0; k < wordBox[curBoxRow].length; k++) {
+                                            if (targetWord.contains(boxText[curBoxRow][k].getText())) {
+                                                if (wordCount[targetWord.indexOf(boxText[curBoxRow][k].getText().charAt(0))]-- > 0) {
                                                     wordBox[curBoxRow][k].setBackground(new Color(160, 150, 40));
+
+                                                    wordCount[targetWord.indexOf(boxText[curBoxRow][k].getText().charAt(0))]--;
                                                 }
                                             }
                                         }
+
                                         
                                         curBoxIndex = 0;
                                         curBoxRow++;
@@ -241,7 +262,7 @@ class WordleGame extends JFrame {
 
                     inputWord += Character.toUpperCase(tempChar);
                 }
-                // System.out.println(inputWord + " Size: " + inputWord.length());
+                System.out.println(inputWord + " Size: " + inputWord.length());
             }
         };
         
@@ -279,10 +300,11 @@ class WordleGame extends JFrame {
     
     public WordleGame() {
         this.setTitle("Wordle Game");
-        this.setSize(400, 525);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setSize(400, 530);
+        this.setLocationRelativeTo(null);
         this.getContentPane().setBackground(new Color(55, 50, 50));
         this.setResizable(false);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(null);
 
         MainMenu();
