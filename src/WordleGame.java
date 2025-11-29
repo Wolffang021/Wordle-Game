@@ -103,7 +103,7 @@ class WordleGame extends JFrame {
         int randomColumn = random.nextInt(words.wordsList[randomRow].length);
         
         targetWord = words.wordsList[randomRow][randomColumn];
-        // targetWord = "CLERK";
+        // targetWord = "TTOTT";
         // System.out.println(targetWord);
         inputWord = "";
         
@@ -186,24 +186,24 @@ class WordleGame extends JFrame {
                         // for (int i : wordCount) {
                         //     System.out.print(i + " ");
                         // }
-                            
+                        
                         if (inputWord.equals(targetWord)) {
-                                messageText.setFont(new Font("dialog", Font.BOLD, 24));
-                                messageText.setText("CORRECT!");
+                            messageText.setFont(new Font("dialog", Font.BOLD, 24));
+                            messageText.setText("CORRECT!");
                                 
-                                for (JPanel box : wordBox[curBoxRow]) {
-                                    box.setBackground(new Color(50, 150, 50));
-                                }
-
-                                playAgainButton.setEnabled(true);
-                                KeyboardFocusManager.getCurrentKeyboardFocusManager().clearGlobalFocusOwner();
+                            for (JPanel box : wordBox[curBoxRow]) {
+                                box.setBackground(new Color(50, 150, 50));
                             }
-                            else {
-                                for (int i = 0; i < words.wordsList.length; i++) {
-                                    for (int j = 0; j < words.wordsList[i].length; j++) {
-                                        if (inputWord.equals(words.wordsList[i][j])) {
-                                            messageText.setFont(new Font("dialog", Font.BOLD, 24));
-                                            messageText.setText("INCORRECT!");
+
+                            playAgainButton.setEnabled(true);
+                            KeyboardFocusManager.getCurrentKeyboardFocusManager().clearGlobalFocusOwner();
+                        }
+                        else {
+                            for (int i = 0; i < words.wordsList.length; i++) {
+                                for (int j = 0; j < words.wordsList[i].length; j++) {
+                                    if (inputWord.equals(words.wordsList[i][j])) {
+                                        messageText.setFont(new Font("dialog", Font.BOLD, 24));
+                                        messageText.setText("INCORRECT!");
                                         
                                         for (int k = 0; k < wordBox[curBoxRow].length; k++) {
                                             if (targetWord.contains(boxText[curBoxRow][k].getText())) {
@@ -214,17 +214,18 @@ class WordleGame extends JFrame {
                                                 }
                                             }
                                         }
+
+                                        // for (int x : wordCount) {
+                                        //     System.out.print(x + " ");
+                                        // }
                                         
                                         for (int k = 0; k < wordBox[curBoxRow].length; k++) {
                                             if (targetWord.contains(boxText[curBoxRow][k].getText())) {
-                                                if (wordCount[targetWord.indexOf(boxText[curBoxRow][k].getText().charAt(0))]-- > 0) {
+                                                if (wordCount[targetWord.indexOf(boxText[curBoxRow][k].getText().charAt(0))]-- > 0 && boxText[curBoxRow][k].getText().charAt(0) != targetWord.charAt(k)) {
                                                     wordBox[curBoxRow][k].setBackground(new Color(160, 150, 40));
-
-                                                    wordCount[targetWord.indexOf(boxText[curBoxRow][k].getText().charAt(0))]--;
                                                 }
                                             }
                                         }
-
                                         
                                         curBoxIndex = 0;
                                         curBoxRow++;
