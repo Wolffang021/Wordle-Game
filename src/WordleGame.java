@@ -61,7 +61,7 @@ class WordleGame extends JFrame {
         versionText.setFont(new Font("ariel black", Font.BOLD, 8));
         versionText.setForeground(new Color(75, 70, 70));
         versionText.setAlignmentX(RIGHT_ALIGNMENT);
-        versionText.setText("v1.0.2");
+        versionText.setText("v1.0.3");
         versionBox.add(versionText);
         
         ActionListener exitActionListener = new ActionListener() {
@@ -304,8 +304,11 @@ class WordleGame extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(400, 530);
         this.setLocationRelativeTo(null);
-        this.getContentPane().setBackground(new Color(55, 50, 50));
         this.setResizable(false);
+        if (getClass().getResource("/icon.png") != null) {
+            this.setIconImage(new ImageIcon(getClass().getResource("/icon.png")).getImage());
+        }
+        this.getContentPane().setBackground(new Color(55, 50, 50));
         this.setLayout(null);
 
         MainMenu();

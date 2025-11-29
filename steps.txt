@@ -2,7 +2,7 @@ Compile (if needed):
 javac -d bin src/*.java
 
 Create jar:
-jar cfe build/WordleGame.jar WordleGame -C bin .
+jar cfe build/WordleGame.jar WordleGame -C bin . -C img .
 
 Run:
 java -jar build/WordleGame.jar
