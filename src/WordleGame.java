@@ -61,7 +61,7 @@ class WordleGame extends JFrame {
         versionText.setFont(new Font("ariel black", Font.BOLD, 8));
         versionText.setForeground(new Color(75, 70, 70));
         versionText.setAlignmentX(RIGHT_ALIGNMENT);
-        versionText.setText("v1.0.1");
+        versionText.setText("v1.0.2");
         versionBox.add(versionText);
         
         ActionListener exitActionListener = new ActionListener() {
